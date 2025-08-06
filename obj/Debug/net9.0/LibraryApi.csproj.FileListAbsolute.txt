@@ -151,6 +151,7 @@
 /Users/ozge/Desktop/LibraryApi/obj/Debug/net9.0/LibraryApi.csproj.CoreCompileInputs.cache
 /Users/ozge/Desktop/LibraryApi/obj/Debug/net9.0/LibraryApi.MvcApplicationPartsAssemblyInfo.cs
 /Users/ozge/Desktop/LibraryApi/obj/Debug/net9.0/LibraryApi.MvcApplicationPartsAssemblyInfo.cache
+/Users/ozge/Desktop/LibraryApi/obj/Debug/net9.0/LibraryApi.sourcelink.json
 /Users/ozge/Desktop/LibraryApi/obj/Debug/net9.0/rjimswa.dswa.cache.json
 /Users/ozge/Desktop/LibraryApi/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
 /Users/ozge/Desktop/LibraryApi/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
