@@ -20,48 +20,66 @@ namespace LibraryApi.Controllers
         // GET /api/books
         [HttpGet]
         public IActionResult GetBooks()
-{
-    var books = _context.Books
-        .Select(b => new BookDto
         {
-            Id = b.Id,
-            Title = b.Title,
-            Author = b.Author,
-            LibraryId = b.LibraryId
-        })
-        .ToList();
+            var books = _context.Books
+                .Select(b => new BookDto
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Author = b.Author,
+                    LibraryId = b.LibraryId
+                })
+                .ToList();
 
-    return Ok(books);
+            return Ok(books);
         }
 
         // POST /api/books
         [HttpPost]
-        public IActionResult CreateBook(Book book)
+        public IActionResult CreateBook(BookDto newBook)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var book = new Book
+            {
+                Title = newBook.Title,
+                Author = newBook.Author,
+                LibraryId = newBook.LibraryId
+            };
+
             _context.Books.Add(book);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(GetBooks), new { id = book.Id }, book);
+
+            var bookDto = new BookDto
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author,
+                LibraryId = book.LibraryId
+            };
+
+            return CreatedAtAction(nameof(GetBooks), new { id = book.Id }, bookDto);
         }
 
         // PUT /api/books/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(int id, Book updatedBook)
+        public IActionResult UpdateBook(int id, BookDto updatedBookDto)
         {
-            if (id != updatedBook.Id)
+            if (id != updatedBookDto.Id)
                 return BadRequest("ID mismatch.");
 
-            if (!_context.Books.Any(b => b.Id == id))
+            var book = _context.Books.Find(id);
+            if (book == null)
                 return NotFound();
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            book.Title = updatedBookDto.Title;
+            book.Author = updatedBookDto.Author;
+            book.LibraryId = updatedBookDto.LibraryId;
 
-            _context.Entry(updatedBook).State = EntityState.Modified;
-            _context.SaveChanges();
+            _ = _context.SaveChanges();
+
             return NoContent();
         }
     }
-}
+} 
