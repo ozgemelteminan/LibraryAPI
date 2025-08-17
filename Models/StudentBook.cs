@@ -7,5 +7,7 @@ namespace LibraryApi.Models
         public Student? Student { get; set; }
         public int BookId { get; set; }
         public Book? Book { get; set; }
+        
+        public DateTime BorrowDate { get; set; } = DateTime.UtcNow;
     }
 }

@@ -11,5 +11,7 @@ namespace LibraryApi.Data
         public DbSet<Library> Libraries => Set<Library>();
         public DbSet<Book> Books => Set<Book>();
         public DbSet<StudentBook> StudentBooks => Set<StudentBook>();
+
+        public DbSet<StudentBookHistory> StudentBookHistories => Set<StudentBookHistory>();
     }
 }

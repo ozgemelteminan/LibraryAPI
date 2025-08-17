@@ -9,6 +9,7 @@
 /Users/ozge/Desktop/LibraryApi/bin/Debug/net9.0/Azure.Core.dll
 /Users/ozge/Desktop/LibraryApi/bin/Debug/net9.0/Azure.Identity.dll
 /Users/ozge/Desktop/LibraryApi/bin/Debug/net9.0/Humanizer.dll
+/Users/ozge/Desktop/LibraryApi/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/ozge/Desktop/LibraryApi/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/ozge/Desktop/LibraryApi/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/ozge/Desktop/LibraryApi/bin/Debug/net9.0/Microsoft.Build.Locator.dll
