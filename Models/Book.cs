@@ -18,5 +18,11 @@ namespace LibraryApi.Models
         public Library? Library { get; set; }
 
         public ICollection<StudentBook>? StudentBooks { get; set; }
+
+        [Required(ErrorMessage = "Year is required")]
+        public int Year { get; set; }
+
+        [Required(ErrorMessage = "ISBN is required")]
+        public string ISBN { get; set; } = null!;
     }
 }
