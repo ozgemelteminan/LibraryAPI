@@ -27,7 +27,9 @@ namespace LibraryApi.Controllers
                     Id = b.Id,
                     Title = b.Title,
                     Author = b.Author,
-                    LibraryId = b.LibraryId
+                    LibraryId = b.LibraryId,
+                    Year = b.Year,
+                    Isbn = b.ISBN
                 })
                 .ToList();
 
@@ -45,7 +47,9 @@ namespace LibraryApi.Controllers
             {
                 Title = newBook.Title,
                 Author = newBook.Author,
-                LibraryId = newBook.LibraryId
+                LibraryId = newBook.LibraryId,
+                Year = newBook.Year,
+                ISBN = newBook.Isbn
             };
 
             _context.Books.Add(book);
@@ -56,7 +60,9 @@ namespace LibraryApi.Controllers
                 Id = book.Id,
                 Title = book.Title,
                 Author = book.Author,
-                LibraryId = book.LibraryId
+                LibraryId = book.LibraryId,
+                Year = book.Year,
+                Isbn = book.ISBN
             };
 
             return CreatedAtAction(nameof(GetBooks), new { id = book.Id }, bookDto);
@@ -76,10 +82,12 @@ namespace LibraryApi.Controllers
             book.Title = updatedBookDto.Title;
             book.Author = updatedBookDto.Author;
             book.LibraryId = updatedBookDto.LibraryId;
+            book.Year = updatedBookDto.Year;
+            book.ISBN = updatedBookDto.Isbn;
 
-            _ = _context.SaveChanges();
+            _context.SaveChanges();
 
             return NoContent();
         }
     }
-} 
+}
