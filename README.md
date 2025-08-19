@@ -1,6 +1,7 @@
 # 🐝 BookHive
 
 A **RESTful API** built with **ASP.NET Core 9** and **Entity Framework Core** for managing a simple library system.  
+
 It exposes endpoints to manage **students**, **libraries**, **books**, and **borrowing/returning** flow, and comes with built-in **Swagger UI** so you can test endpoints directly in the browser.
 
 > ℹ️ **Auth**: JWT authentication is configured in the pipeline, but currently **no endpoints are protected** with `[Authorize]`. You can add `[Authorize]` attributes on controllers/actions when you’re ready.
@@ -33,20 +34,30 @@ If you have access to that server, you **do not need to install SQL Server local
 
 ## 🛠️ Testing & Installation
 
-1. ### 📥 Clone or download the project:  
-   >`git clone https://github.com/ozgemelteminan/bookhive-backend`
+ ### 📥 Clone or download the project:  
+   ```bash
+   git clone https://github.com/ozgemelteminan/bookhive-backend
+   ```
 
-2. ### 📂 Navigate into the project folder:
-   >`cd LibraryApi`
-3. ### 🔧 Restore dependencies
-   >`dotnet restore`
+ ### 📂 Navigate into the project folder:
+   ```bash
+   cd LibraryApi
+   ```
 
-4. ### ▶️ Run the Project
-   >`dotnet run`
+ ### 🔧 Restore dependencies
+   ```bash
+   dotnet restore
+   ```
 
-5. ### 🌐 Open Swagger
-   >`https://localhost:5274/swagger`
+ ### ▶️ Run the Project
+   ```bash
+   dotnet run
+   ```
 
+ ### 🌐 Open Swagger
+   ```bash
+   https://localhost:5274/swagger
+   ```
 <br>
 
 ## 🦾 Tech Stack
@@ -130,7 +141,6 @@ Content-Type: application/json
 }
 ```
 
-<br>
 
 ### Libraries (`/api/Libraries`)
 | Method | Path                     | Description          |
@@ -164,7 +174,6 @@ Content-Type: application/json
 }
 ```
 
-<br>
 
 ### Books (`/api/Books`)
 | Method | Path               | Description   |
@@ -204,7 +213,6 @@ Content-Type: application/json
 }
 ```
 
-<br>
 
 ### Borrowing (`/api/StudentBooks`)
 | Method | Path                                        | Description                                  |
@@ -232,7 +240,6 @@ Content-Type: application/json
 DELETE /api/StudentBooks/1/5
 ```
 
-<br>
 
 ### Reports (`/api/Reports`)
 | Method | Path                               | Description                     |
@@ -263,7 +270,7 @@ To call protected endpoints from Swagger, click **Authorize** and paste `Bearer 
 
 <br>
 
-**🌐 CORS (Cross-Origin Resource Sharing)**
+## 🌐 CORS (Cross-Origin Resource Sharing)**
 
 CORS is enabled for all origins, headers, and methods in `Program.cs`:
  > ✅ This allows your API to be accessed from any frontend or external domain.
