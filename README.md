@@ -1,24 +1,55 @@
 # 🐝 BookHive
 
 A **RESTful API** built with **ASP.NET Core 9** and **Entity Framework Core** for managing a simple library system.  
-It exposes endpoints to manage **students**, **libraries**, **books**, and **borrowing/returning** flow, and ships with **Swagger UI** for interactive docs.
+It exposes endpoints to manage **students**, **libraries**, **books**, and **borrowing/returning** flow, and comes with built-in **Swagger UI** so you can test endpoints directly in the browser.
 
 > ℹ️ **Auth**: JWT authentication is configured in the pipeline, but currently **no endpoints are protected** with `[Authorize]`. You can add `[Authorize]` attributes on controllers/actions when you’re ready.
 
----
+<br>
 
-## 🚀 Features
+## ⚡ Features
 
-- Students: register, login (JWT token), list students, get by id  
-- Libraries: CRUD (create, list, get, update)  
-- Books: create, list, update (includes `Year` and `ISBN`)  
-- Borrow/Return: borrow a book, return a book, view student borrowing history  
-- Reports: list books by student or by library  
-- Swagger UI & OpenAPI
+- Students: `register`, `login (JWT token)`, list students, get by id. 
+- Libraries: CRUD (create, list, get, update).  
+- Books: create, list, update (includes `Year` and `ISBN`).  
+- Borrow/Return: `borrow` a book, `return` a book, view student borrowing history.  
+- Reports: list books by student or by library.  
+- Swagger UI & OpenAPI.
 
----
+<br>
 
-## 🛠️ Tech Stack
+## 🚀 Getting Started with Prerequisites
+
+Make sure you have installed:
+> [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)  
+
+⚠️ **Note about SQL Server**  
+>This project is already connected to a remote SQL Server.  
+If you have access to that server, you **do not need to install SQL Server locally**.  
+
+👉 Correct connection string in `appsettings.json` (already configured ✅)  
+
+<br>
+
+## 🛠️ Testing & Installation
+
+1. ### 📥 Clone or download the project:  
+   >`git clone https://github.com/ozgemelteminan/bookhive-backend`
+
+2. ### 📂 Navigate into the project folder:
+   >`cd LibraryApi`
+3. ### 🔧 Restore dependencies
+   >`dotnet restore`
+
+4. ### ▶️ Run the Project
+   >`dotnet run`
+
+5. ### 🌐 Open Swagger
+   >`https://localhost:5274/swagger`
+
+<br>
+
+## 🦾 Tech Stack
 
 - **Target Framework:** .NET **9.0** (`net9.0`)  
 - **Packages:**  
@@ -29,7 +60,7 @@ It exposes endpoints to manage **students**, **libraries**, **books**, and **bor
 - **Database:** SQL Server (see connection string in *appsettings.json*)  
 - **CORS:** Policy **AllowAll** (any origin/method/header)
 
----
+<br>
 
 ## 📂 Project Structure
 
@@ -53,44 +84,7 @@ LibraryApi/
 └─ LibraryApi.csproj
 ```
 
----
-
-## ⚙️ Getting Started
-
-### 1) Prerequisites
-- .NET 9 SDK  
-- SQL Server instance (local or remote)
-
-## ⚙️ Configuration
-
-The project uses **MSSQL Server**.  
-A default connection string is already provided in `appsettings.json` and points to a hosted database instance.
-
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=LibrarySystemDb.mssql.somee.com,5274;Database=LibrarySystemDb;User Id=OzgeMeltem_SQLLogin_1;Password=d93v586dsh;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True;"
-}
-
-
-### 3) Restore & Database Migration
-```bash
-dotnet restore
-
-# If you don't have the EF CLI tool:
-dotnet tool install --global dotnet-ef
-
-# Apply migrations
-dotnet ef database update
-```
-
-### 4) Run
-```bash
-dotnet run
-```
-- Swagger UI: `https://localhost:5001/swagger`  
-- Controllers: `https://localhost:5001/api/...`
-
----
+<br>
 
 ## 🔗 API Endpoints (Accurate)
 
@@ -103,6 +97,7 @@ dotnet run
 | GET    | `/api/Students/{id}` | Get a student by id             |
 | POST   | `/api/Students/register` | Register a new student     |
 | POST   | `/api/Students/login`    | Login and receive JWT token |
+
 
 **Register – Request example**
 ```http
@@ -135,7 +130,7 @@ Content-Type: application/json
 }
 ```
 
----
+<br>
 
 ### Libraries (`/api/Libraries`)
 | Method | Path                     | Description          |
@@ -144,6 +139,7 @@ Content-Type: application/json
 | GET    | `/api/Libraries/{id}`    | Get library by id    |
 | POST   | `/api/Libraries`         | Create library       |
 | PUT    | `/api/Libraries/{id}`    | Update library       |
+
 
 **Create Library – Request example**
 ```http
@@ -168,7 +164,7 @@ Content-Type: application/json
 }
 ```
 
----
+<br>
 
 ### Books (`/api/Books`)
 | Method | Path               | Description   |
@@ -208,7 +204,7 @@ Content-Type: application/json
 }
 ```
 
----
+<br>
 
 ### Borrowing (`/api/StudentBooks`)
 | Method | Path                                        | Description                                  |
@@ -217,6 +213,7 @@ Content-Type: application/json
 | POST   | `/api/StudentBooks`                         | Borrow a book                                |
 | DELETE | `/api/StudentBooks/{studentId}/{bookId}`    | **Return** a book (moves record to history)  |
 | GET    | `/api/StudentBooks/history/{studentId}`     | Borrow/return history for a student          |
+
 
 **Borrow – Request example**
 ```http
@@ -235,7 +232,7 @@ Content-Type: application/json
 DELETE /api/StudentBooks/1/5
 ```
 
----
+<br>
 
 ### Reports (`/api/Reports`)
 | Method | Path                               | Description                     |
@@ -243,12 +240,16 @@ DELETE /api/StudentBooks/1/5
 | GET    | `/api/Reports/student/{studentId}` | Books currently borrowed by student |
 | GET    | `/api/Reports/library/{libraryId}` | Books belonging to a library     |
 
----
+<br>
 
 ## 🔒 Authentication (JWT)
 
-- Configured via `Jwt` section in **appsettings.json** (Key, Issuer, Audience).  
-- Middleware is wired in `Program.cs` (`UseAuthentication(); UseAuthorization();`).  
+- JWT authentication is configured in appsettings.json under the `Jwt` section, including `Key`, `Issuer`, and `Audience`.  
+- Middleware is wired in `Program.cs`:
+  
+  >`UseAuthentication()`
+  >` UseAuthorization()`
+  
 - To **protect** endpoints, decorate controllers/actions with `[Authorize]` and optionally roles/policies.
 
 > Example:
@@ -260,43 +261,24 @@ DELETE /api/StudentBooks/1/5
 
 To call protected endpoints from Swagger, click **Authorize** and paste `Bearer <token>` (from `/api/Students/login`).
 
----
+<br>
 
-## 🌐 CORS
+**🌐 CORS (Cross-Origin Resource Sharing)**
 
-A permissive **AllowAll** policy is registered and used:
+CORS is enabled for all origins, headers, and methods in `Program.cs`:
+ > ✅ This allows your API to be accessed from any frontend or external domain.
+>
 ```csharp
-app.UseCors("AllowAll");
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+});  
 ```
-It allows any origin, method, and header (suitable for local development).
+<br>
 
----
+## License
 
-## 🧪 Testing & Tooling
-
-- Run tests (if/when added):  
-  ```bash
-  dotnet test
-  ```
-- Regenerate database after model updates:
-  ```bash
-  dotnet ef migrations add <Name>
-  dotnet ef database update
-  ```
-
----
-
-## 📦 Build & Run (Production)
-
-```bash
-dotnet publish -c Release -o out
-# then run the generated executable in /out
-```
-
-Use environment variables or a secrets store to override connection strings and JWT secrets in production.
-
----
-
-## 📄 License
-
-MIT (or update to your chosen license).
+This project is for educational/demo purposes.
