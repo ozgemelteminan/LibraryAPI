@@ -61,21 +61,16 @@ LibraryApi/
 - .NET 9 SDK  
 - SQL Server instance (local or remote)
 
-### 2) Configure AppSettings
-Edit **`appsettings.json`**:
+## ⚙️ Configuration
+
+The project uses **MSSQL Server**.  
+A default connection string is already provided in `appsettings.json` and points to a hosted database instance.
+
 ```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SQL_SERVER;Database=LibraryDb;User Id=USER;Password=PASSWORD;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True;"
-  },
-  "Jwt": {
-    "Key": "your_long_secret_key_here",
-    "Issuer": "LibraryApi",
-    "Audience": "LibraryApiUsers"
-  }
+"ConnectionStrings": {
+  "DefaultConnection": "Server=LibrarySystemDb.mssql.somee.com,5274;Database=LibrarySystemDb;User Id=OzgeMeltem_SQLLogin_1;Password=d93v586dsh;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True;"
 }
-```
-> 🔒 For development, consider moving secrets into [User Secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) or environment variables.
+
 
 ### 3) Restore & Database Migration
 ```bash
