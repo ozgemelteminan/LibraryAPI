@@ -97,7 +97,7 @@ LibraryApi/
 
 <br>
 
-## 🔗 API Endpoints (Accurate)
+## 🔗 API Endpoints
 
 > Base route convention: `[Route("api/[controller]")]` → controller name defines the segment (e.g., `StudentsController` → `/api/Students`).
 
