@@ -7,17 +7,18 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// DB Context
+// Configure Database Context (SQL Server with connection string from appsettings.json)
 builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Controllers & Swagger
+// Add Controllers & Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// ✅ Swagger + JWT Authorize
+// Swagger configuration with JWT Authentication support
 builder.Services.AddSwaggerGen(c =>
 {
+    // Define JWT Bearer scheme
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -28,6 +29,7 @@ builder.Services.AddSwaggerGen(c =>
         Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer <token>'"
     });
 
+    // Apply the scheme to all endpoints
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -44,7 +46,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// ✅ CORS ekle
+// Configure CORS (Allow all origins, headers, and methods)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -53,14 +55,16 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader());
 });
 
-// ✅ JWT Authentication ekle
+// JWT Authentication configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
-// Null kontrolü
+// Ensure that JWT:Key exists in configuration
 var jwtKey = jwtSettings["Key"];
 if (string.IsNullOrEmpty(jwtKey))
     throw new InvalidOperationException("JWT:Key is missing in configuration.");
 
+
+// Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -78,24 +82,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+// Enable Swagger only in Development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// ✅ CORS middleware'i ekle
+// Enable CORS
 app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
-// ✅ Authentication ve Authorization sırası önemli
+// Authentication must come before Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
-// ✅ Preflight (OPTIONS) isteklerine izin ver
+// Allow preflight (OPTIONS) requests for CORS
 app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok());
 
+//  Map controllers
 app.MapControllers();
 
+// Run the application
 app.Run();

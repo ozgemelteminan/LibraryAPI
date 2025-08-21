@@ -8,6 +8,12 @@ using System.Text;
 
 namespace LibraryApi.Controllers
 {
+    // Controller responsible for student operations:
+    // - Retrieve all students
+    // - Retrieve a single student
+    // - Register new students
+    // - Login and generate JWT tokens
+
     [ApiController]
     [Route("api/[controller]")]
     public class StudentsController : ControllerBase
@@ -15,13 +21,15 @@ namespace LibraryApi.Controllers
         private readonly LibraryContext _context;
         private readonly IConfiguration _configuration;
 
+        // Constructor: injects database context and configuration (used for JWT settings)
         public StudentsController(LibraryContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
         }
 
-        // Tüm öğrencileri getir
+        // GET: api/students
+        // Returns a list of all students in the system
         [HttpGet]
         public IActionResult GetStudents()
         {
@@ -29,7 +37,9 @@ namespace LibraryApi.Controllers
             return Ok(students);
         }
 
-        // Tek öğrenci getir
+        // GET: api/students/{id}
+        // Returns a single student by ID
+        // If student not found -> 404 NotFound
         [HttpGet("{id}")]
         public IActionResult GetStudent(int id)
         {
@@ -41,7 +51,10 @@ namespace LibraryApi.Controllers
             return Ok(student);
         }
 
-        // Yeni öğrenci kaydı (register)
+       // POST: api/students/register
+        // Registers a new student
+        // Validates email uniqueness and non-empty password
+        // Returns 201 Created on success
         [HttpPost("register")]
         public IActionResult Register([FromBody] Student student)
         {
@@ -59,7 +72,10 @@ namespace LibraryApi.Controllers
             return CreatedAtAction(nameof(GetStudent), new { id = student.Id }, student);
         }
 
-        // Giriş (login) + JWT token üret
+        // POST: api/students/login
+        // Authenticates a student by email and password
+        // If valid, generates a JWT token with student info
+        // If invalid, returns 401 Unauthorized
         [HttpPost("login")]
         public IActionResult Login([FromBody] StudentLoginDto loginDto)
         {
@@ -75,7 +91,8 @@ namespace LibraryApi.Controllers
             if (student == null)
                 return Unauthorized(new { message = "Invalid email or password" });
 
-            // ✅ JWT oluştur
+
+            // Create JWT claims with student info
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, student.Id.ToString()),
@@ -83,6 +100,7 @@ namespace LibraryApi.Controllers
                 new Claim("fullName", student.FullName)
             };
 
+            // Get JWT key from configuration
             var jwtKey = _configuration["Jwt:Key"];
             if (string.IsNullOrEmpty(jwtKey))
                 throw new InvalidOperationException("JWT key is missing in configuration");
@@ -90,6 +108,7 @@ namespace LibraryApi.Controllers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            // Create JWT token with claims and expiration
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
@@ -100,7 +119,7 @@ namespace LibraryApi.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            // ✅ Hem kullanıcı bilgisi hem token dön
+            // Return student info + token
             return Ok(new
             {
                 Id = student.Id,
