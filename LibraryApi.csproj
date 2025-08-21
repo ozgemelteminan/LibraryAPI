@@ -1,20 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- This project uses the ASP.NET Core Web SDK, meaning it is a Web API project -->
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <!-- The project targets .NET 9.0 -->
+
     <Nullable>enable</Nullable>
+    <!-- Enables nullable reference type checks (helps avoid null reference errors) -->
+
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Automatically includes common namespaces (like System, System.Linq, etc.) 
+         so you don’t have to type them manually in every file -->
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Provides support for JWT authentication in ASP.NET Core -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
+
+    <!-- Adds OpenAPI/Swagger support to ASP.NET Core -->
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
+
+    <!-- Entity Framework Core provider for SQL Server -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
+
+    <!-- Entity Framework Core tools (used for migrations, database updates, etc.) -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.8">
+      <!-- Assets to include with this package -->
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <!-- PrivateAssets=all means this dependency won’t be passed on to other projects -->
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+
+    <!-- Swagger UI generator (creates interactive documentation for your API) -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
   </ItemGroup>
-
 </Project>
