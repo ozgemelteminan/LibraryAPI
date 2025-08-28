@@ -58,6 +58,7 @@ If you have access to that server, you **do not need to install SQL Server local
    ```bash
    https://localhost:5274/swagger
    ```
+> This is an example, you should paste the URL that appears in your terminal.
 <br>
 
 ## 🦾 Tech Stack
